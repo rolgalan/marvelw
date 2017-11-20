@@ -4,16 +4,15 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 26
 
-
-
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        buildConfigField "String", "PUBLIC_KEY", "\"" + getApiKey('PUBLIC_KEY') + "\""
+        buildConfigField "String", "PRIVATE_KEY", "\"" + getApiKey('PRIVATE_KEY') + "\""
     }
 
     buildTypes {
@@ -22,8 +21,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
+
+def getApiKey(String name) {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secret.properties')))
+    return props[name]
+}
+
 final STETHO_VERSION = '1.5.0'
 final GSON_VERSION = '2.8.1'
 final RETROFIT_VERSION = '2.3.0'

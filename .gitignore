@@ -16,3 +16,5 @@ proguard/
 *.apk
 *.dex
 *.log
+
+secret.properties
