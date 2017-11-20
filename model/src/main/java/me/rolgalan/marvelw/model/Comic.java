@@ -6,10 +6,8 @@ import java.util.List;
  * Created by Roldán Galán on 20/11/2017.
  */
 
-public interface Comic {
-
-    Long getId();
-
+public interface Comic extends Identifiable {
+    
     String getTitle();
 
     String getDescription();
