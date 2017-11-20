@@ -48,6 +48,11 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
         }
     }
 
+    public L getItems() {
+
+        return items;
+    }
+
     public K getItemById(long id) {
 
         return itemMap.get(id);
@@ -59,6 +64,11 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
             return null;
         }
         return items.get(index);
+    }
+
+    public int getCurrentOffset() {
+
+        return items.getOffset();
     }
 
     public void clear() {
