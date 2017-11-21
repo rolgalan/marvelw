@@ -10,7 +10,7 @@ class ServerMarvelComic {
         internal set
     var title: String = ""
         internal set
-    var description: String = ""
+    var description: String? = null
         internal set
     var resourceURI: String = ""
         internal set

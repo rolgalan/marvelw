@@ -11,8 +11,12 @@ import me.rolgalan.marvelw.server.model.*
 
 /**
  * Created by Roldán Galán on 20/11/2017.
+ *
+ * This class transforms a server object into its equivalente in our local data model.
+ *
+ * This is useful to skip any nullable server values, and to transform server complex objects into
+ * more simple models.
  */
-
 class ComicsBoundary(listener: DataInterface<ComicsList>) : DataBoundary<ComicsList, ServerResult<ServerMarvelComic>>(listener) {
 
     override fun onResultsReceived(response: ServerResult<ServerMarvelComic>?) {
@@ -33,7 +37,7 @@ class ComicsBoundary(listener: DataInterface<ComicsList>) : DataBoundary<ComicsL
 
     private fun map(server: ServerMarvelComic): Comic {
 
-        return MarvelComic(server.id, server.title, server.description, server.isbn,
+        return MarvelComic(server.id, server.title, server.description ?: "", server.isbn,
                 map(server.thumbnail), map(server.characters), map(server.stories),
                 map(server.series))
     }
