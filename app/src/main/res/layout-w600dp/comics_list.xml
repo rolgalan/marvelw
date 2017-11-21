@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="8dp"
+              android:layout_marginRight="8dp"
+              android:baselineAligned="false"
+              android:divider="?android:attr/dividerHorizontal"
+              android:orientation="horizontal"
+              android:showDividers="middle"
+              android:weightSum="3"
+              tools:context="me.rolgalan.marvelw.view.comicslist.ComicsListActivity">
+
+    <!--
+    This layout is a two-pane layout for the Comics
+    master/detail flow.
+    -->
+
+    <android.support.v7.widget.RecyclerView android:id="@+id/comic_list"
+                                            xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginRight="8dp"
+                                            android:layout_weight="1"
+                                            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                                            tools:context=".view.comicslist.ComicsListActivity"
+                                            tools:listitem="@layout/comic_list_item" />
+
+    <FrameLayout
+        android:id="@+id/comic_detail_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2" />
+
+</LinearLayout>
