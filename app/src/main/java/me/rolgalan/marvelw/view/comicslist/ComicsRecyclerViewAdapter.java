@@ -1,6 +1,7 @@
 package me.rolgalan.marvelw.view.comicslist;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,7 @@ public class ComicsRecyclerViewAdapter
     @Override
     public int getItemCount() {
 
-        return list!=null ? list.size() : 0;
+        return list != null ? list.size() : 0;
     }
 
     public interface OnComicListInteractionListener {
@@ -89,10 +90,21 @@ public class ComicsRecyclerViewAdapter
                 Glide.with(context)
                         .load(imgUrl)
                         .fitCenter()
-                        .placeholder(R.drawable.placeholder_hero)
+                        .placeholder(getGenderlessSuperPlaceholder())
                         .crossFade()
                         .into(image);
             }
+        }
+
+        private static @DrawableRes int getGenderlessSuperPlaceholder() {
+            /*
+                Creative Commons placeholder resources
+                https://commons.wikimedia.org/wiki/File:Placeholder_female_superhero_c.png
+                https://commons.wikimedia.org/wiki/File:Placeholder_male_superhero_c.png
+             */
+            return System.currentTimeMillis() % 2 == 0
+                   ? R.drawable.placeholder_hero
+                   : R.drawable.placeholder_heroine;
         }
 
         void setData(Comic item, final OnComicListInteractionListener parent) {
@@ -109,7 +121,6 @@ public class ComicsRecyclerViewAdapter
                     }
                 }
             });
-
         }
 
         private void updateViews() {
