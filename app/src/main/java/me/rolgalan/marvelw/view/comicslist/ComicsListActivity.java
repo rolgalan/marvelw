@@ -2,7 +2,6 @@ package me.rolgalan.marvelw.view.comicslist;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.rolgalan.marvelw.R;
 import me.rolgalan.marvelw.model.Comic;
+import me.rolgalan.marvelw.view.comicdetails.ComicDetailActivity;
 
 /**
  * Created by Roldán Galán on 21/11/2017.
@@ -93,14 +93,12 @@ public class ComicsListActivity extends AppCompatActivity
     public void showMessage(String message) {
 
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Snackbar.make(recyclerView, message, Snackbar.LENGTH_LONG);
     }
 
     @Override
     public void notifyDatasetChanged() {
 
         recyclerView.getAdapter().notifyDataSetChanged();
-
     }
 
     @Override
@@ -114,5 +112,6 @@ public class ComicsListActivity extends AppCompatActivity
     public void onComicInteraction(Comic comic, int position) {
 
         showMessage("Selected " + comic.getTitle());
+        startActivity(ComicDetailActivity.createIntent(this, position));
     }
 }
