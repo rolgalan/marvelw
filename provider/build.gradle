@@ -21,22 +21,27 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
 }
 
 final MOCKITO_VERSION = '2.10.0'
-final SUPPORT_VERSION = '26.1.0'
 
 dependencies {
     testImplementation 'junit:junit:4.12'
 
-    implementation "com.android.support:support-annotations:${SUPPORT_VERSION}"
+    implementation "com.android.support:support-annotations:${support_version}"
+    implementation "com.android.support:support-v4:${support_version}"
 
     implementation project(path: ':model')
     implementation project(path: ':server')
 
     testImplementation "org.mockito:mockito-core:${MOCKITO_VERSION}"
-    testImplementation "org.mockito:mockito-all:2.0.2-beta"
     androidTestImplementation "org.mockito:mockito-android:${MOCKITO_VERSION}"
+    testImplementation "org.mockito:mockito-all:2.0.2-beta"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 repositories {

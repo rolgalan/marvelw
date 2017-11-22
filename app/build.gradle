@@ -19,7 +19,6 @@ android {
     }
 }
 
-final SUPPORT_VERSION = '26.1.0'
 final GLIDE_VERSION = '3.8.0'
 final BUTTERKNIFE_VERSION = '8.8.1'
 
@@ -27,7 +26,7 @@ dependencies {
     //Stetho requires init in Application
     implementation "com.facebook.stetho:stetho:$stetho_version"
 
-    implementation "com.android.support:design:${SUPPORT_VERSION}"
+    implementation "com.android.support:design:${support_version}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
@@ -35,7 +34,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     compile project(path: ':model')
