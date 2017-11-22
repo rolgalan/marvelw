@@ -30,7 +30,7 @@ class ComicsBoundary(listener: DataInterface<ComicsList>) : DataBoundary<ComicsL
     }
 
     private fun map(server: ServerContainer<ServerMarvelComic>): ComicsList {
-        val comics = MarvelComicList(server.total, server.offset, server.count)
+        val comics = MarvelComicList(server.total, server.offset)
         comics.addAll(server.results.map { map(it) })
         return comics
     }

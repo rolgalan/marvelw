@@ -13,6 +13,6 @@ public class ComicsCache extends Cache<Comic, ComicsList> {
     @Override
     protected ComicsList initList() {
 
-        return new MarvelComicList(-1,-1,-1);
+        return new MarvelComicList(-1,-1);
     }
 }

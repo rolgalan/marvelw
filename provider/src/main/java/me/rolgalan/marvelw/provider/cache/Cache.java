@@ -43,6 +43,8 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
         }
 
         items.setTotalPossibleSize(list.getTotalPossibleSize());
+        items.setOffset(list.getOffset());
+
         for (K t : list) {
             addItem(t);
         }
@@ -69,6 +71,10 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
     public int getCurrentOffset() {
 
         return items.getOffset();
+    }
+
+    public int getSize(){
+        return items.size();
     }
 
     public void clear() {

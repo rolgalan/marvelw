@@ -109,4 +109,9 @@ public class DataProvider {
             }
         });
     }
+
+    public int getComicsCachedSize() {
+
+        return comicsCache.getSize();
+    }
 }
