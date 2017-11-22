@@ -1,6 +1,6 @@
 package me.rolgalan.marvelw.provider.cache;
 
-import android.util.LongSparseArray;
+import android.support.v4.util.LongSparseArray;
 
 import me.rolgalan.marvelw.model.Identifiable;
 import me.rolgalan.marvelw.model.PaginableList;
