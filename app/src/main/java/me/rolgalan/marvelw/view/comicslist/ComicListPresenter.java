@@ -22,6 +22,7 @@ class ComicListPresenter implements DataInterface<ComicsList> {
 
     void loadData() {
         //TODO load/spinner while request
+        isLoading = true;
         DataProvider.getInstance().getCharacterComics(this);
     }
 
@@ -29,7 +30,7 @@ class ComicListPresenter implements DataInterface<ComicsList> {
     public void onReceived(ComicsList data) {
 
         if (view != null) {
-                view.setDataList(data);
+            view.setDataList(data);
         }
         onRequestEnded();
     }
@@ -39,8 +40,8 @@ class ComicListPresenter implements DataInterface<ComicsList> {
 
         if (view != null) {
             view.showMessage(error);
-            view.onRequestEnded();
         }
+        onRequestEnded();
     }
 
     void loadMore() {
@@ -49,7 +50,6 @@ class ComicListPresenter implements DataInterface<ComicsList> {
             Log.i("ComicsList", "loadMoreButton");
             view.onLoadingMore();
             view.showProgress();
-            isLoading = true;
             loadData();
         }
     }
