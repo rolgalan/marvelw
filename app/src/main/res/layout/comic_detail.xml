@@ -38,5 +38,13 @@
             android:layout_marginBottom="@dimen/detail_margin"
             android:textIsSelectable="true" />
 
+        <TextView
+            android:id="@+id/detail_characters"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_margin"
+            android:textIsSelectable="true" />
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

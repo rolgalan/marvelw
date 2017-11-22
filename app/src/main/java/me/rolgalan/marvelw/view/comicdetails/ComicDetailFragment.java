@@ -40,6 +40,8 @@ public class ComicDetailFragment extends Fragment implements DataInterface<Comic
     TextView description;
     @BindView(R.id.detail_title)
     TextView title;
+    @BindView(R.id.detail_characters)
+    TextView characters;
     @BindView(R.id.detail_image)
     ImageView image;
 
@@ -111,7 +113,13 @@ public class ComicDetailFragment extends Fragment implements DataInterface<Comic
             if (!isTwoPane) {
                 title.setText(comic.getTitle());
                 description.setText(comic.getDescription());
-                //TODO show other comic relevant fields
+
+                final String chars = comic.getCharactersString();
+                characters.setVisibility(chars.isEmpty() ? View.GONE : View.VISIBLE);
+                //TODO: Instead of using getCharactersString, handle it here and make characters clickable
+                characters.setText("Characters in this comic: " + chars);
+
+                //TODO show other comic relevant fields?
             }
         } else {
             //loadImageLandscape(context, image, character.getImagePathLandscape());
