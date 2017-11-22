@@ -13,7 +13,7 @@ import java.util.List;
  * Adapter to include a footer view at the end of a RecyclerView.
  * Based on https://github.com/lopspower/HFRecyclerView
  * <p>
- * Since we're using a GridManager, implement 2 differnet footers (one per grid)
+ * Since we're using a GridManager, implement 2 different footers (one per grid cell in the grid)
  * <p>
  */
 

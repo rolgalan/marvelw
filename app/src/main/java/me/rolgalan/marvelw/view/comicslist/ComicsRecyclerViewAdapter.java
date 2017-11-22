@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,36 +17,38 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.rolgalan.marvelw.R;
 import me.rolgalan.marvelw.model.Comic;
+import me.rolgalan.marvelw.view.utils.FooterRecyclerViewAdapter;
 
 /**
  * Created by Roldán Galán on 21/11/2017.
  */
 
-public class ComicsRecyclerViewAdapter
-        extends RecyclerView.Adapter<ComicsRecyclerViewAdapter.ComicViewHolder> {
+public class ComicsRecyclerViewAdapter extends FooterRecyclerViewAdapter<Comic> {
 
     private final OnComicListInteractionListener parent;
-    private final List<Comic> list;
+    private final LoadMoreListener listenerLoadMore;
 
     public ComicsRecyclerViewAdapter(List<Comic> items,
                                      OnComicListInteractionListener interactionListener) {
 
-        this.list = items;
-        this.parent = interactionListener;
+        this(items, interactionListener, null);
+
     }
 
-    private Comic getItem(int position) {
+    public ComicsRecyclerViewAdapter(List<Comic> items,
+                                     OnComicListInteractionListener interactionListener,
+                                     LoadMoreListener listenerLoadMore) {
 
-        if (list == null || position < 0 || position > getItemCount()) {
-            return null;
-        }
-        return list.get(position);
+        super(items);
+        this.parent = interactionListener;
+        this.listenerLoadMore = listenerLoadMore;
     }
 
     @Override
-    public ComicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected RecyclerView.ViewHolder getItemView(LayoutInflater inflater, ViewGroup parent) {
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comic_list_item, parent, false);
@@ -52,17 +56,57 @@ public class ComicsRecyclerViewAdapter
     }
 
     @Override
-    public void onBindViewHolder(final ComicViewHolder holder, final int position) {
+    protected RecyclerView.ViewHolder getSecondFooterView(LayoutInflater inflater,
+                                                          ViewGroup parent) {
 
-        holder.setData(getItem(position), parent);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.load_more, parent, false);
+        return new FooterViewHolder(view);
     }
 
     @Override
-    public int getItemCount() {
-
-        return list != null ? list.size() : 0;
+    protected RecyclerView.ViewHolder getFirstFooterView(LayoutInflater inflater,
+                                                         ViewGroup parent) {
+        //Just an empty space, since we're interested in displaying the loader on the right
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.empty_view, parent, false);
+        return new EmptyViewHolder(view);
     }
 
+    @Override
+    protected void onBindItemViewHolder(RecyclerView.ViewHolder holder, final int position,
+                                        Comic data) {
+
+        ((ComicViewHolder) holder).setData(data, parent);
+    }
+
+    @Override
+    protected void onBindSecondFooterViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        listenerLoadMore.setLoadMoreButon(((FooterViewHolder) holder).getButton(),
+                ((FooterViewHolder) holder).getProgressBar());
+    }
+
+    @Override
+    protected void onBindFirstFooterViewHolder(RecyclerView.ViewHolder holder, int position) {
+        //not required
+    }
+
+    /**
+     * The view using this adapter should implement this interface to get control of the button
+     * and spinner while and at the end of each request.
+     */
+    public interface LoadMoreListener {
+
+        void loadMore();
+
+        void setLoadMoreButon(Button button, ProgressBar spinner);
+    }
+
+    /**
+     * The parent have to implement this interface to control what happens when the user taps
+     * in any item of the adapter.
+     */
     public interface OnComicListInteractionListener {
 
         void onComicInteraction(Comic comic, int position);
@@ -96,8 +140,12 @@ public class ComicsRecyclerViewAdapter
             }
         }
 
-        private static @DrawableRes int getGenderlessSuperPlaceholder() {
+        private static @DrawableRes
+        int getGenderlessSuperPlaceholder() {
             /*
+                Instead of using a placeholder showing a man, use two different placeholders with
+                a man and a woman ;)
+
                 Creative Commons placeholder resources
                 https://commons.wikimedia.org/wiki/File:Placeholder_female_superhero_c.png
                 https://commons.wikimedia.org/wiki/File:Placeholder_male_superhero_c.png
@@ -136,11 +184,36 @@ public class ComicsRecyclerViewAdapter
         }
     }
 
-    static class EmptyViewHolder extends RecyclerView.ViewHolder {
+    class FooterViewHolder extends RecyclerView.ViewHolder {
 
-        public EmptyViewHolder(View itemView) {
+        @BindView(R.id.loadmore_button)
+        Button button;
+        @BindView(R.id.progress_bar)
+        ProgressBar progressBar;
 
-            super(itemView);
+        FooterViewHolder(View view) {
+
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+
+        Button getButton() {
+
+            return button;
+        }
+
+        ProgressBar getProgressBar() {
+
+            return progressBar;
+        }
+
+        @OnClick(R.id.loadmore_button)
+        void onButtonClicked() {
+
+            button.setEnabled(false);
+            if (listenerLoadMore != null) {
+                listenerLoadMore.loadMore();
+            }
         }
     }
 }
