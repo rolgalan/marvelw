@@ -15,4 +15,7 @@ data class MarvelComic(override val id: Long,
                        override val stories: List<SimpleExtraItem>,
                        override val series: List<SimpleExtraItem>) : Comic {
 
+    override fun getCharactersString(): String {
+        return characters.joinToString { it.name }
+    }
 }

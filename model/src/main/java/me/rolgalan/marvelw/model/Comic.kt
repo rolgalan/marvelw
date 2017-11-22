@@ -20,4 +20,5 @@ interface Comic : Identifiable {
 
     val series: List<SimpleExtraItem>
 
+    fun getCharactersString() : String
 }
