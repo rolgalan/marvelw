@@ -14,19 +14,17 @@ import me.rolgalan.marvelw.server.ResponseInterface
  * DataInterface, used by the view (app module) to request data.
  */
 abstract class DataBoundary<in T, K>(private val listener: DataInterface<T>?) : ResponseInterface<K> {
-    private val TAG = "Boundary"
 
     abstract override fun onResultsReceived(response: K?)
 
     override fun onError(error: String) {
 
-        Log.e(TAG, "DataBoundary.onError: " + error)
+        Log.e("Boundary", "DataBoundary.onError: " + error)
         listener?.onError(error)
     }
 
     fun listenerOnReceived(data: T) {
 
-        Log.e(TAG, "DataBoundary.listenerOnReceived")
         listener?.onReceived(data)
     }
 }
