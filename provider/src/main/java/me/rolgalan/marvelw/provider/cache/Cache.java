@@ -13,7 +13,6 @@ import me.rolgalan.marvelw.model.PaginableList;
 
 public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> {
 
-    private final L items = initList();
     /*
     This field could be a normal Map<Long,Comic>, but a LongSparseArray is used for memory optimization.
     The Hashmap and the SparseArray have very comparable performance up to the 10K size.
@@ -22,6 +21,7 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
     and then uses less memory.
      */
     private final LongSparseArray<K> itemMap = initMap();
+    private L items;
 
     private LongSparseArray<K> initMap() {
 
@@ -38,15 +38,19 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
 
     public void setOtherList(L list) {
 
-        if (list.getOffset() == 0) {
-            clear();
-        }
+        if (items == null) {
+            items = list;
+        } else {
 
-        items.setTotalPossibleSize(list.getTotalPossibleSize());
-        items.setOffset(list.getOffset());
+            if (list.getOffset() == 0) {
+                clear();
+                items.setTotalPossibleSize(list.getTotalPossibleSize());
+            }
+            items.setOffset(list.getOffset());
 
-        for (K t : list) {
-            addItem(t);
+            for (K t : list) {
+                addItem(t);
+            }
         }
     }
 
@@ -62,7 +66,7 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
 
     public K getItemByPosition(int index) {
 
-        if (index < 0 || index >= items.size()) {
+        if (items == null || index < 0 || index >= items.size()) {
             return null;
         }
         return items.get(index);
@@ -70,10 +74,11 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
 
     public int getCurrentOffset() {
 
-        return items.getOffset();
+        return items != null ? items.getOffset() : -1;
     }
 
-    public int getSize(){
+    public int getSize() {
+
         return items.size();
     }
 

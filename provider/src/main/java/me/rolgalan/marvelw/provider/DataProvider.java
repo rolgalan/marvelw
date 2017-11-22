@@ -40,6 +40,16 @@ public class DataProvider {
         return instance;
     }
 
+    /**
+     * Auto increase the offset of the last request
+     *
+     * @param listener
+     */
+    public void getCharacterComics(DataInterface<ComicsList> listener) {
+
+        getCharacterComics(comicsCache.getCurrentOffset() + 1, listener);
+    }
+
     public void getCharacterComics(int offset, DataInterface<ComicsList> listener) {
 
         getCharacterComics(DEFAULT_CHARACTER_ID, offset, listener);
@@ -47,6 +57,7 @@ public class DataProvider {
 
     private void getCharacterComics(int characterId, int offset,
                                     final DataInterface<ComicsList> listener) {
+        //TODO a force-refresh method is going to be needed at some point. Not now :)
 
         if (comicsCache.getCurrentOffset() >= offset) {
             listener.onReceived(comicsCache.getItems());
