@@ -24,8 +24,10 @@ android {
 }
 
 def getApiKey(String name) {
+
     def Properties props = new Properties()
-    props.load(new FileInputStream(new File('secret.properties')))
+    //Absolute path required to execute each module test suite
+    props.load(new FileInputStream(new File(rootDir.absolutePath + '/secret.properties')))
     return props[name]
 }
 
