@@ -28,12 +28,18 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
         return new LongSparseArray<K>();
     }
 
-    protected abstract L initList();
+    protected abstract L listConstructor();
+
+    public void initList(){
+        items = listConstructor();
+    }
 
     public void addItem(K item) {
 
-        items.add(item);
-        itemMap.put(item.getId(), item);
+        if (items != null) {
+            items.add(item);
+            itemMap.put(item.getId(), item);
+        }
     }
 
     public void setOtherList(L list) {
@@ -79,12 +85,14 @@ public abstract class Cache<K extends Identifiable, L extends PaginableList<K>> 
 
     public int getSize() {
 
-        return items.size();
+        return items != null ? items.size() : 0;
     }
 
     public void clear() {
 
-        items.clear();
+        if (items != null) {
+            items.clear();
+        }
         itemMap.clear();
     }
 }

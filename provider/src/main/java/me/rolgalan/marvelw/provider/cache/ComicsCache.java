@@ -11,7 +11,7 @@ import me.rolgalan.marvelw.model.implementation.MarvelComicList;
 public class ComicsCache extends Cache<Comic, ComicsList> {
 
     @Override
-    protected ComicsList initList() {
+    protected ComicsList listConstructor() {
 
         return new MarvelComicList(-1,-1);
     }

@@ -10,9 +10,9 @@ import static org.junit.Assert.*;
 public class ComicsCacheTest {
 
     @Test
-    public void initList() throws Exception {
+    public void listConstructor() throws Exception {
         Cache cache = new ComicsCache();
+        cache.initList();
         assertNotNull(cache.getItems());
     }
-
 }
