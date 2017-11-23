@@ -22,12 +22,16 @@ The four modules are:
 
 - **model**: All the interfaces representing the information used by our app. There are also a specific implementation for each interface.
 - **server**: all the networking is doing here. Each response from the server has its own data classes different than those in the **model** package, so both can be changed independently.
-- **provider**: It's the only thing known by the view and contains the business part. Connects to the server to fetch the info, transform it into the **model** data types, and return the data asynchronously. It provides a basic cache level of already requested data.
+- **provider**: It's the only thing known by the view and contains the business part. Connects to the server to fetch the info, transform it into the **model** data types, and return the data asynchronously. It implements a basic cache level of already requested data.
 - **app**: all the activities and view related code.
 
 If we required storing info in a local database, a new module should be created and the provider would decide whether fetch the info from the server or from the DB. This way the view doesn't care about where the data comes from.
 
 Different classes are defined for server objects and local objects. This helps avoiding null responses from the server, and simplify complex data structures (like converting server objects holding images into simple strings with the whole url).
+
+The provider layer stores responses from server in a really basic cache (it does not persist, it's just an object in the memory). But this helps to not reload the list when coming back from the detail.
+
+Pagination is implemented, and pre-loads the next page of items when the scroll is about to end (last 4 rows).
 
 ## Testing
 Just an example unit test class has been added. Adding more is in the todo list. UI testing would have required more time to implement it.
