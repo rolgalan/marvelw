@@ -27,8 +27,6 @@ android {
 
 }
 
-final MOCKITO_VERSION = '2.10.0'
-
 dependencies {
     testImplementation 'junit:junit:4.12'
 
@@ -38,9 +36,8 @@ dependencies {
     implementation project(path: ':model')
     implementation project(path: ':server')
 
-    testImplementation "org.mockito:mockito-core:${MOCKITO_VERSION}"
-    androidTestImplementation "org.mockito:mockito-android:${MOCKITO_VERSION}"
-    testImplementation "org.mockito:mockito-all:2.0.2-beta"
+    testImplementation "org.mockito:mockito-core:${mockito_version}"
+    androidTestImplementation "org.mockito:mockito-android:${mockito_version}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
